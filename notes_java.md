@@ -125,6 +125,7 @@ and inner block. This will result in compilation error. Details of class scope w
     does when appropriate.
 
 5. Method Signature:
+    Method signature consists of method name and parameter list.
 
 
 
