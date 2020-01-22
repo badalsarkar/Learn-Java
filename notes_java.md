@@ -1,7 +1,7 @@
 Learning JAVA
 =============
 
-##Chapter 1- Java Fundamentals
+## Chapter 1- Java Fundamentals
 1. Byte code: This is not machine code. This is highly optimized set of instructions to be executed by JVM (java 
         virtual machine).
 2. Java is platform independent by the way of using JVM. JVM is platform dependent. 
@@ -19,7 +19,7 @@ client side.
 12. Semicolon and space - same as c++
 
 
-##Chapter 2- Data Types and Operators
+## Chapter 2- Data Types and Operators
 1. Java is strongly typed. All operations are type checked at compile time. 
 2. Java doesn't support unsigned int.
 3. Char is unsigned 16 bit. Java uses unicode not ASCII. It uses unicode because java was designed to be used for internet. 
@@ -69,7 +69,7 @@ and inner block. This will result in compilation error. Details of class scope w
 
 
 
-##Chapter 3- Program Control Statement
+## Chapter 3- Program Control Statement
 1.  Keyboard input: 
     Java keyboard inputs are line buffered. Inputs are stored into temporary buffer. Inputs are received as integer. We
     need to convert to char if we are ecpecting char.
@@ -78,7 +78,7 @@ and inner block. This will result in compilation error. Details of class scope w
     we can use 'break' to exit the loop
 
 
-##Chapter 4- Classes, Objects, Methods
+## Chapter 4- Classes, Objects, Methods
 1.  we can define class in the same file. A class can be defined before using or after using.
 
             //class can be declared before or after
@@ -126,15 +126,93 @@ and inner block. This will result in compilation error. Details of class scope w
 
 5. Method Signature:
     Method signature consists of method name and parameter list.
+6. Types of Methods:
+    - Instance Method: Object level method, can access instance variables
+    - Static Method: Class level method, can't access instance variables, can access static variables. Object instantiation
+                    is not required. To call *classname.methodname()*.
 
 
 
 ## Chapter 5 - More Data Type and Operators
+
+#### Array
    
 1.  Array:<br> 
-    The syntax is `type identifier[]= new type[size];` <br>
-    with initialization list `type identifier[]= {val1, val2,....,valn};`<br>
-    
+    The syntax is<br> `type identifier[]= new type[size];` <br>
+    with initialization list<br> `type identifier[]= {val1, val2,....,valn};`<br>
+
+    - Array is a reference variable
+    - Array is passed by value in a function. Pass by value means the reference of the array is copied not the elements
+    - Multidimensional array- `type identifier[][] = new type [r][c];`<br>. 
+    - array.length on multidimensional array returns the number of rows. array[index].lenght returns the number of columns
+      in the specified row.
+
+2. Ragged Array: A multidimensional array where the length of the column index can vary. When we declare multidemsional
+ array, we must specify r from \[r\]\[c\]. The value of 'c' can be specified later. See the following example
+
+ ```java
+ int numbers[][]= new int [10][];
+
+ numbers[0]= new int [5]; //the length of number[0] is 5
+ numbers[1]= new int [2]; //the length of the numbers[1] is 2
+ ....
+ ```
+
+3. Alternative array declaration syntax: 
+```java
+     int counter[]=new int [4];
+     int [] counter;
+     int [] counter, anotherCounter; //creates two arrays
+```
+
+4. **In java, arrays are implemented as object**
+
+5. For each loop- we can user the 'break' keyword to stop the loop 
+<br>
+6. For each loop is read only- any change in the iteration variable will not reflect on the original variable. <br>
+7. In multidimensional array, use the enhanced for loop the following way-
+
+```java
+int num[][]= new int[5][5];
+for(int i[]:num){
+    for(int j:i){
+        //do something here
+        //notice the declaration of i and j
+    }
+}
+```
+
+
+#### String
+
+1. String is object in Java.
+2. Create string using any of the following method
+```java
+String a= new String("some string");
+String b= new String(a);
+String c= "Some String";
+```
+
+**String.equal() vs ==**
+String.equal matches individual characters sequence whereas == matches the reference which means whether two variables
+are referring to the same address.
+
+3. Java string is immutable. Read about immutability [here](https://github.com/badalsarkar/Software-Engineering-Concepts/blob/master/mutability/mutability.md).
+
+4. Strings can be used in switch statement. However, this can reduce performance. It is better to use integer in switch.<br>
+5. Command line arguments are stored in an array of Strings
+
+6. Type inference: Use the var keyword the. It can be used for array declaration as `var myarray= new int [10]`. Type 
+inference is not allowed in instance variable, parameter declaration, return type.
+
+
+#### Bitwise Operator
+
+
+
+
+
+
 
 
 
