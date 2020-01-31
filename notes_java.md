@@ -3,7 +3,8 @@ Learning JAVA
 
 #### Table of Content
 1. [Java Fundamental](#fundamental)
-
+5. [Inheritance](#inheritance)
+6. [Polymorphism](#polymorphism)
 
 
 
@@ -248,6 +249,25 @@ variable, it has to be initialized explicitly. Otherwise there will be compilati
 17. Packages- a collection of classes
 18. Importing packages- we use the 'import' statement. We can import a class, a specific method, static methods and fields
 19. To add a class into a package, add 'package *package name*' statement at the top of the file that contains the classes.
+20. Some guidelines for designing classes-
+    - Always keep data private
+    - Always initialize data
+        Java initializes the instance variable with default value. But don't depend on the default value.        initialize in the constructor or variable declaration.
+    - Don't use too many basic types in a class
+        If you can group them together in a seperate class. See to following example-
+        ```java
+            private String street;
+            private String city;
+            private String state;
+            private int zip;
+        ```
+        The above can be put into a class called address.
+    - Not all fields need accessor and mutator
+    - Break up the class if it is doing multiple things
+    - Make the name of your class and methods reflect their responsibility
+    - Make class immutable if possible. To do this make all instance variable immutable. If client code needs to change the value, return a new object with updated data. Immutable objects are thread safe.  
+21. Calling constructor from inside a constructor: use the "this" keyword. `this(arguments)`
+22. Java access modifiers: [see this link](https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in)
 
 
 ## More Data Type and Operators
@@ -357,6 +377,41 @@ Scanner input= new Scanner(System.in);  //to read input from keyboard
 
 input.netx();       //read next word
 ```
+
+<a name="inheritance"></a>
+## Inheritance
+- To invoce a base class method, we use the *super* keyword. `super.somemethod()`. In C++ the same is done using the *::* operator. `Base::somemethod()`.
+- *Dynamic binding* is the default behaviour in Java. Dynamic binding means during the runtime, automatically selecting the correct type to call method. In C++ to enable dynamic binding we need to make the method virtual at the base class. 
+- Multiple Inheritance: Java doesn't support multiple inheritance. But provides a different mechanism to provide the functionality of multiple inheritance. This is called *Interface*. In C++ multiple inheritance is allowed.
+
+
+
+
+<a name="polymorphism"></a>
+## Polymorphism
+- An object having multiple form.
+
+        ```java
+        super objname= superobject;     //valid
+        super objname= subobject;       //valid
+
+        objname.supermethod(); //valid
+        objname.submethod(); //invalid
+        ```
+
+- Method call: Java creates a method table for each class. The table contains method signature and a refernece to the actual method. When we make a method call, the compiler determines the type of object on which the method has been called. Then it pulls the method table for that class(type) and super classes of that class. Next, the compiler matches the method signature with all the available methods. Then, calls the most appropriate method. This is called *dynamic binding*.
+
+- The methods those are private, static, final and constructor are staticaly bound. Because the compiler knows exactly which method to call. 
+
+- When we override a super class method in a subclass, the accessibility must be same or less restrictive than super class method. 
+
+- Preventing inheritance: There may be instances when we dno't want any class to be inherited from a calss. To do that we need to make that class *final*. 
+    `public final class{}` -> this class is marked as *final*. So, no class can be extended from this class.
+    Marking a class *final* makes all its methods *final*. Final methods can't be overridden. 
+
+    If you don't want polymorphic behaviour for a function, you can make it final. In C++ functions are not polymorphic by default. We have to explicitely make it polymorphic by declaring as *virtual*. Declaring functions as *final* has some performance benefits. There is no need for dynamic binding. And the compiler can optimize the method call, if it is short. This is called *inlining*. Although the JIT compiler can perform this optimization even if functions are overridden in subclass. 
+
+
 
 
 
