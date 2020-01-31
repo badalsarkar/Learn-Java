@@ -1,6 +1,38 @@
 Learning JAVA
 =============
 
+#### Table of Content
+1. [Java Fundamental](#fundamental)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a name="fundamental"></a>
 ## Chapter 1- Java Fundamentals
 1. Byte code: This is not machine code. This is highly optimized set of instructions to be executed by JVM (java 
         virtual machine).
@@ -216,7 +248,6 @@ variable, it has to be initialized explicitly. Otherwise there will be compilati
 17. Packages- a collection of classes
 18. Importing packages- we use the 'import' statement. We can import a class, a specific method, static methods and fields
 19. To add a class into a package, add 'package *package name*' statement at the top of the file that contains the classes.
-20. A .java file can only have one public class
 
 
 ## More Data Type and Operators
