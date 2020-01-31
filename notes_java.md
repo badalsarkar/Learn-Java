@@ -21,6 +21,25 @@ client side.
 
 ## Chapter 2- Data Types and Operators
 1. Java is strongly typed. All operations are type checked at compile time. 
+    Java has 8 primitive types- 4 ints, 2 floating point, 1 char, 1 boolean
+    *ints*
+        - int
+        - short
+        - long
+        - byte (used for low level file handling or for large arrays when storage space is at a premium
+
+    ** The range for integer doesn't depend on the platform on which the program runs. In C/C++ the size of integer will
+    change based on the processor type. 16 bit processor will have different integer range than a 32 bit integer **
+    <br>
+    *floating point*
+        - float
+        - double
+    ** floating point numbers are not suitable for financial calculations as the roundoff error is not accepted. For that
+    use the BigDecimal clall **
+
+
+
+
 2. Java doesn't support unsigned int.
 3. Char is unsigned 16 bit. Java uses unicode not ASCII. It uses unicode because java was designed to be used for internet. 
 4. Literal: These are fixed values. They are commonly known as constants. Character literals are written as 'c'. The
@@ -49,6 +68,7 @@ and inner block. This will result in compilation error. Details of class scope w
     **Short Circuite Logical Operator**
     In an logical operation, the short circuite operator will check the second operand only when necessary. But the normal
     operator will always check both the operands.
+
 9. Short hand assignment: x+=10
     This also includes the &=, |=, ^=
 
@@ -58,6 +78,7 @@ and inner block. This will result in compilation error. Details of class scope w
     if the two types are compatible and widening conversion is possible, Java will do the conversion automatically
 
 11. Conversion of incompatible types: use casting. (type) (expression/ target type). Example- (int) (double)
+
 12. Type conversion in expression:
     Java follows promotion policy. Lower order types are converted to higher order types. 
     First, all char, byte, and short values are promoted to int. Then, if one operand is a long, the whole expression is 
@@ -73,12 +94,13 @@ and inner block. This will result in compilation error. Details of class scope w
 1.  Keyboard input: 
     Java keyboard inputs are line buffered. Inputs are stored into temporary buffer. Inputs are received as integer. We
     need to convert to char if we are ecpecting char.
+
 2.  If, Switch, For:
     for the for loop the initialization, condition and iteration can be empty.
     we can use 'break' to exit the loop
 
 
-## Chapter 4- Classes, Objects, Methods
+## Classes, Objects, Methods
 1.  we can define class in the same file. A class can be defined before using or after using.
 
             //class can be declared before or after
@@ -103,6 +125,7 @@ and inner block. This will result in compilation error. Details of class scope w
                 String name;
                 int age;
             }
+
 2.  In a void method, we can use 'return' keyword to terminate the function and return control back to the caller. 
     There can be multiple 'return' keyword in a function
 
@@ -131,9 +154,72 @@ and inner block. This will result in compilation error. Details of class scope w
     - Static Method: Class level method, can't access instance variables, can access static variables. Object instantiation
                     is not required. To call *classname.methodname()*.
 
+7. Relationship between classes
+    The most common relationships are 
+    - Dependence ("uses-a"): When a class uses another class's methods. Good design practice is to minimize the number of 
+     classes that depend on each other. This is called lose coupling. Strong coupling introduces bugs because change in one
+     class affects another class.
+    - Aggregation ("has-a"): One class contains object of another class.
+    - Inheritance ("is-a"): One class receives properties and methods from another class.
+
+8. Mutator method- a method that changes the value
+9. Accessor method- a method that reads the value
+
+    **The JIT compiler watches for methods that are short, commonly called and not overridden and optimizes them away**
+    **Be very careful about not return a reference to a mutable object from accessor method, if you need to return a reference
+    to a mutable object, you should clone it first**
+```java
+    Class Employee{
+        ...
+            public Date getHireDate(){
+                return (Date) hireDate.clone();
+            }
+        ...
+    }
+```
+question: what is the return type of clone() method?
+
+10. Java uses 'final' keyword to declare constant. Constant means further assignment is not possible. 
+
+11. Static Modifier: Makes a variable a class variable. Same as C++.
+
+12. Static Method: These methods operate on classes not on objects. Meaning, we don't need to instantiate an object to 
+call these methods. Static methods can only access static variables. 
+    **Use static method on two situations- 1) When the method doesn't need to access the instance variable, 2) when a method
+    only needs to access the static variables**
+
+13. Factory method: When we want to instantiate different type of object from same class, we use the factory method. In 
+this design, there is no constructor to the class, rather there are different static methods that creates an object and 
+returns it. The class works as a factory to create different types objects. See the following example
+```java
+NumberFormat currencyFormatter= NumberFormat.getCurrencyInstance();
+NumberFormat percentFormatter= NumberFormat.getPercentInstance();
+```
+here the same we are instantiating a NumberFormat object but using two different methods. To fulfill this purpose, we can't 
+use constructor because constructor can't be named, also we can't vary the type of object constructed. 
+
+The main method is static because it doesn't work on any object. When the program starts there is no object. So, the main
+method has to be static. 
 
 
-## Chapter 5 - More Data Type and Operators
+
+14. Method Parameters: There are two types of parameters- primitive types and object reference type. Three things to remember-
+    - A method can't modify a parameter of primitive type
+    - A method can change the state of an object parameter
+    - A method can't make an object paramter refer to new object
+
+15. Default field initialization: If it is a instance variable it is initialized to 0 or false or null. If it is local
+variable, it has to be initialized explicitly. Otherwise there will be compilation error.
+
+16. If constructor is overloaded, the default constructor is not provided by compiler.
+
+17. Packages- a collection of classes
+18. Importing packages- we use the 'import' statement. We can import a class, a specific method, static methods and fields
+19. To add a class into a package, add 'package *package name*' statement at the top of the file that contains the classes.
+20. A .java file can only have one public class
+
+
+## More Data Type and Operators
 
 #### Array
    
@@ -218,6 +304,9 @@ inference is not allowed in instance variable, parameter declaration, return typ
 
 
 
+
+
+
     
     
     
@@ -225,7 +314,21 @@ inference is not allowed in instance variable, parameter declaration, return typ
 
     
 
-    
+###### Java Scanner Class    
+
+Java provides many ways to read input. Scanner class is one of them. It is found in the java.util package. This class
+provides numerous methods to read input. To use it we need to instantiate an object by passing the input stream. 
+
+```java
+import java.util.Scanner;
+
+Scanner input= new Scanner(System.in);  //to read input from keyboard
+
+input.netx();       //read next word
+```
+
+
+
 
 
 
