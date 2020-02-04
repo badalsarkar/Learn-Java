@@ -425,6 +425,19 @@ input.netx();       //read next word
     if(staff[0] instanceof Manager)
         boss= (Manager) staff[0];
     ```
+- Abstract method and Abstract class: Abstract methods are implemented in the subclass. If a class has an abstract method,
+    the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible to 
+    declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract methods from super class,
+    that subclass also must be abstract class. A subclass becomes a concrete class when it defiles all the abstract methods from super class.
+    We can create a variable of abstract type but that
+    must refer to a concrete sub-class.
+
+- Access modifier: Java has four access modifier- public, private, protected, default(package-private)
+        public: visible to world
+        private: visible to class only
+        protected: visible to all classes in the same package(package-private) and by its sub-class from another package
+        default: visible to all classes with the package 
+  [more info](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)
 
     
 
@@ -449,5 +462,7 @@ input.netx();       //read next word
 
 
 
-##Resources Used
+## Resources Used
 1. [Java: A beginner's guide] (http://proquestcombo.safaribooksonline.com.ezproxy.torontopubliclibrary.ca/book/programming/java/9781260440225/the-history-and-philosophy-of-java/ch1lev2sec4_html?uicode=torontopl)
+2. Core Java, by Cay S. Hortsmann
+3. 
