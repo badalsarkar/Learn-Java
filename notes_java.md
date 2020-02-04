@@ -266,6 +266,8 @@ variable, it has to be initialized explicitly. Otherwise there will be compilati
     - Break up the class if it is doing multiple things
     - Make the name of your class and methods reflect their responsibility
     - Make class immutable if possible. To do this make all instance variable immutable. If client code needs to change the value, return a new object with updated data. Immutable objects are thread safe.  
+    - Override the *equals* method and the *toString* method defined in the *Object* class.
+
 21. Calling constructor from inside a constructor: use the "this" keyword. `this(arguments)`
 22. Java access modifiers: [see this link](https://stackoverflow.com/questions/215497/what-is-the-difference-between-public-protected-package-private-and-private-in)
 
@@ -402,15 +404,40 @@ input.netx();       //read next word
         objname.submethod(); //invalid
         ```
 
-- Method call: Java creates a method table for each class. The table contains method signature and a refernece to the actual method. When we make a method call, the compiler determines the type of object on which the method has been called. Then it pulls the method table for that class(type) and super classes of that class. Next, the compiler matches the method signature with all the available methods. Then, calls the most appropriate method. This is called *dynamic binding*.
+- **Method call**: 
+    It is very important ot understand how the method call works because the concept is related to polymorphism.
+    
+    step 1: The compiler looks at the declared type of the object and the method name. The compiler enumerates all the
+    methods whith the same name in the class and all superclasses.
+    
+    step 2: Next, compiler determines the type of the argument that are suplied in the method call. If there is a unique 
+    method among all the methods, that method is called. This process is called overloading resolution. If there is no
+    matching parameter, the compiler generates an error. At this point the compiler knows the method name and the argument
+    type. 
+    
+    step 3: If the method is private, static, final or a constructor, then the compiler knows exactly which mehtod to 
+    call. This is called *static binding*. Otherwise the method to be called depends on the type of the implicit parameter.
+    Dynamic binding is used to determine the type. The compiler just generates an instructon to call the method with 
+    dynamic binding. 
+    
+    step 4: When the program runs, the virtual machine must call the method on the actual type of the object. If it, can't
+    find the mehtod in the class, it searches the method in the super class and calls. To make this process more efficent 
+    Java uses a method table, a table that lists all the method name available to a class and the actual method that it 
+    refers to. 
 
 - The methods those are private, static, final and constructor are staticaly bound. Because the compiler knows exactly which method to call. 
 
-- When we override a super class method in a subclass, the accessibility must be same or less restrictive than super class method. 
+- When we override a super class method in a subclass, the accessibility must be same or less restrictive than super class method. A subclass may change the return type of the method to subtype or original type.For example-
+```java
+public Employee getbuddy(){}
+//in subclass
+public Manager getbuddy(){} //ok to change the return type
+```
 
-- Preventing inheritance: There may be instances when we dno't want any class to be inherited from a calss. To do that we need to make that class *final*. 
-    `public final class{}` -> this class is marked as *final*. So, no class can be extended from this class.
-    Marking a class *final* makes all its methods *final*. Final methods can't be overridden. 
+
+- Preventing inheritance: There may be instances when we dno't want any class to be inherited from a calss. To do that 
+ we need to make that class *final*. `public final class{}` -> this class is marked as *final*. So, no class can be 
+ extended from this class. Marking a class *final* makes all its methods *final*. Final methods can't be overridden. 
 
     If you don't want polymorphic behaviour for a function, you can make it final. In C++ functions are not polymorphic by default. We have to explicitely make it polymorphic by declaring as *virtual*. Declaring functions as *final* has some performance benefits. There is no need for dynamic binding. And the compiler can optimize the method call, if it is short. This is called *inlining*. Although the JIT compiler can perform this optimization even if functions are overridden in subclass. 
 
@@ -425,20 +452,26 @@ input.netx();       //read next word
     if(staff[0] instanceof Manager)
         boss= (Manager) staff[0];
     ```
-- Abstract method and Abstract class: Abstract methods are implemented in the subclass. If a class has an abstract method,
-    the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible to 
-    declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract methods from super class,
-    that subclass also must be abstract class. A subclass becomes a concrete class when it defiles all the abstract methods from super class.
-    We can create a variable of abstract type but that
-    must refer to a concrete sub-class.
+- Abstract method and Abstract class: Abstract methods are implemented in the subclass. If a class has an  abstract 
+  method, the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible
+to declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract 
+ methods from super class, that subclass also must be abstract class. A subclass becomes a concrete class when it defiles all the abstract methods from super class.
+    We can create a variable of abstract type but that must refer to a concrete sub-class.
+- A subclass can be abstract even if its super class is concrete. 
+- A concrete method can be overriden as abstract.
+
 
 - Access modifier: Java has four access modifier- public, private, protected, default(package-private)
 
         public: visible to world
         private: visible to class only
-        protected: visible to all classes in the same package(package-private) and by its sub-class from another package
+        protected: visible to all classes in the same package(package-private) 
+                   and by its sub-class from another package
         default: visible to all classes with the package 
-  [more info](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)
+  [more about access modifier](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)
+
+- Cosmic superclass: In Java, every class extends the Object class. It is the default. But the primitive types are not object.
+
 
     
 
