@@ -378,6 +378,9 @@ Scanner input= new Scanner(System.in);  //to read input from keyboard
 input.netx();       //read next word
 ```
 
+
+
+
 <a name="inheritance"></a>
 ## Inheritance
 - To invoce a base class method, we use the *super* keyword. `super.somemethod()`. In C++ the same is done using the *::* operator. `Base::somemethod()`.
@@ -410,6 +413,21 @@ input.netx();       //read next word
     Marking a class *final* makes all its methods *final*. Final methods can't be overridden. 
 
     If you don't want polymorphic behaviour for a function, you can make it final. In C++ functions are not polymorphic by default. We have to explicitely make it polymorphic by declaring as *virtual*. Declaring functions as *final* has some performance benefits. There is no need for dynamic binding. And the compiler can optimize the method call, if it is short. This is called *inlining*. Although the JIT compiler can perform this optimization even if functions are overridden in subclass. 
+
+- **Casting**: Use casting when you want to convert superclass object to subclass object. `subclass object=(subclass)superclass object`.
+
+Java automatically cast the sub class to super calss. We need to manually cast the super class to the sub class. As casting deals with type system, it is checked during compile time. If we are casting down the inheritance chain and trying to cast an object which is not related, java runtime thorws a ClassCastException error and the program terminates. It, is therefore necessay to check the object type before casting.
+
+```java
+Employee []staff = new Employee [5];
+staff[0]= new Employee();
+Manager boss;
+if(staff[0] instanceof Manager)
+    boss= (Manager) staff[0];
+```
+
+    
+
 
 
 
