@@ -433,6 +433,7 @@ input.netx();       //read next word
     must refer to a concrete sub-class.
 
 - Access modifier: Java has four access modifier- public, private, protected, default(package-private)
+
         public: visible to world
         private: visible to class only
         protected: visible to all classes in the same package(package-private) and by its sub-class from another package
