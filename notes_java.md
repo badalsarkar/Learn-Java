@@ -416,15 +416,15 @@ input.netx();       //read next word
 
 - **Casting**: Use casting when you want to convert superclass object to subclass object. `subclass object=(subclass)superclass object`.
 
-Java automatically cast the sub class to super calss. We need to manually cast the super class to the sub class. As casting deals with type system, it is checked during compile time. If we are casting down the inheritance chain and trying to cast an object which is not related, java runtime thorws a ClassCastException error and the program terminates. It, is therefore necessay to check the object type before casting.
+    Java automatically cast the sub class to super calss. We need to manually cast the super class to the sub class. As casting deals with type system, it is checked during compile time. If we are casting down the inheritance chain and trying to cast an object which is not related, java runtime thorws a ClassCastException error and the program terminates. It, is therefore necessay to check the object type before casting.
 
-```java
-Employee []staff = new Employee [5];
-staff[0]= new Employee();
-Manager boss;
-if(staff[0] instanceof Manager)
-    boss= (Manager) staff[0];
-```
+    ```java
+    Employee []staff = new Employee [5];
+    staff[0]= new Employee();
+    Manager boss;
+    if(staff[0] instanceof Manager)
+        boss= (Manager) staff[0];
+    ```
 
     
 
