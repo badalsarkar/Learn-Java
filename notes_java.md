@@ -2,9 +2,13 @@ Learning JAVA
 =============
 
 #### Table of Content
-1. [Java Fundamental](#fundamental)
-5. [Inheritance](#inheritance)
-6. [Polymorphism](#polymorphism)
+- [Java Fundamental](#fundamental)
+- [Inheritance](#inheritance)
+- [Polymorphism](#polymorphism)
+- [Interface](#interface)
+- [Error Handling](#errorHandling)
+
+
 
 
 
@@ -50,6 +54,8 @@ client side.
 10. Varibale declaration- same as c++
 11. If, for - same as c++
 12. Semicolon and space - same as c++
+
+
 
 
 ## Chapter 2- Data Types and Operators
@@ -126,7 +132,7 @@ and inner block. This will result in compilation error. Details of class scope w
 ## Chapter 3- Program Control Statement
 1.  Keyboard input: 
     Java keyboard inputs are line buffered. Inputs are stored into temporary buffer. Inputs are received as integer. We
-    need to convert to char if we are ecpecting char.
+    need to convert to char if we are expecting char.
 
 2.  If, Switch, For:
     for the for loop the initialization, condition and iteration can be empty.
@@ -385,7 +391,7 @@ input.netx();       //read next word
 
 <a name="inheritance"></a>
 ## Inheritance
-- To invoce a base class method, we use the *super* keyword. `super.somemethod()`. In C++ the same is done using the *::* operator. `Base::somemethod()`.
+- To invoke a base class method, we use the *super* keyword. `super.somemethod()`. In C++ the same is done using the *::* operator. `Base::somemethod()`.
 - *Dynamic binding* is the default behaviour in Java. Dynamic binding means during the runtime, automatically selecting the correct type to call method. In C++ to enable dynamic binding we need to make the method virtual at the base class. 
 - Multiple Inheritance: Java doesn't support multiple inheritance. But provides a different mechanism to provide the functionality of multiple inheritance. This is called *Interface*. In C++ multiple inheritance is allowed.
 
@@ -425,9 +431,12 @@ input.netx();       //read next word
     Java uses a method table, a table that lists all the method name available to a class and the actual method that it 
     refers to. 
 
-- The methods those are private, static, final and constructor are staticaly bound. Because the compiler knows exactly which method to call. 
+- The methods those are private, static, final and constructor are staticaly bound. Because the compiler knows exactly 
+which method to call. 
 
-- When we override a super class method in a subclass, the accessibility must be same or less restrictive than super class method. A subclass may change the return type of the method to subtype or original type.For example-
+- When we override a super class method in a subclass, the accessibility must be same or less restrictive than super class 
+method. A subclass may change the return type of the method to subtype or original type.For example-
+
 ```java
 public Employee getbuddy(){}
 //in subclass
@@ -435,42 +444,73 @@ public Manager getbuddy(){} //ok to change the return type
 ```
 
 
+
 - Preventing inheritance: There may be instances when we dno't want any class to be inherited from a calss. To do that 
  we need to make that class *final*. `public final class{}` -> this class is marked as *final*. So, no class can be 
  extended from this class. Marking a class *final* makes all its methods *final*. Final methods can't be overridden. 
 
-    If you don't want polymorphic behaviour for a function, you can make it final. In C++ functions are not polymorphic by default. We have to explicitely make it polymorphic by declaring as *virtual*. Declaring functions as *final* has some performance benefits. There is no need for dynamic binding. And the compiler can optimize the method call, if it is short. This is called *inlining*. Although the JIT compiler can perform this optimization even if functions are overridden in subclass. 
+If you don't want polymorphic behaviour for a function, you can make it final. In C++ functions are not polymorphic by 
+default. We have to explicitely make it polymorphic by declaring as *virtual*. Declaring functions as *final* has some 
+performance benefits. There is no need for dynamic binding. And the compiler can optimize the method call, if it is short. 
+This is called *inlining*. Although the JIT compiler can perform this optimization even if functions are overridden in 
+subclass. 
 
-- **Casting**: Use casting when you want to convert superclass object to subclass object. `subclass object=(subclass)superclass object`.
+- **Casting**: Use casting when you want to convert superclass object to subclass object. `subclass object=(subclass)
+superclass object`.
 
-    Java automatically cast the sub class to super calss. We need to manually cast the super class to the sub class. As casting deals with type system, it is checked during compile time. If we are casting down the inheritance chain and trying to cast an object which is not related, java runtime thorws a ClassCastException error and the program terminates. It, is therefore necessay to check the object type before casting.
+Java automatically cast the sub class to super calss. We need to manually cast the super class to the sub class. As 
+casting deals with type system, it is checked during compile time. If we are casting down the inheritance chain and 
+trying to cast an object which is not related, java runtime thorws a ClassCastException error and the program terminates. 
+It, is therefore necessay to check the object type before casting.
 
-    ```java
-    Employee []staff = new Employee [5];
-    staff[0]= new Employee();
-    Manager boss;
-    if(staff[0] instanceof Manager)
-        boss= (Manager) staff[0];
-    ```
-- Abstract method and Abstract class: Abstract methods are implemented in the subclass. If a class has an  abstract 
-  method, the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible
-to declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract 
- methods from super class, that subclass also must be abstract class. A subclass becomes a concrete class when it defiles all the abstract methods from super class.
-    We can create a variable of abstract type but that must refer to a concrete sub-class.
-- A subclass can be abstract even if its super class is concrete. 
-- A concrete method can be overriden as abstract.
+```java
+Employee []staff = new Employee [5];
+staff[0]= new Employee();
+Manager boss;
+if(staff[0] instanceof Manager)
+boss= (Manager) staff[0];
+```
 
+- Abstract method and Abstract class- Abstract methods are implemented in the subclass. If a class has an  abstract method,the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible to declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract methods from super class, that subclass also must be abstract class. A subclass becomes a concrete class when it defiles all the abstract methods from super class. We can create a variable of abstract type but that must refer to a concrete sub-class.
 
+- A subclass can be abstract even if its super class is concrete 
+- A concrete method can be overriden as abstract
 - Access modifier: Java has four access modifier- public, private, protected, default(package-private)
 
-        public: visible to world
-        private: visible to class only
-        protected: visible to all classes in the same package(package-private) 
+        **public**: visible to world
+        **private**: visible to class only
+        **protected**: visible to all classes in the same package(package-private) 
                    and by its sub-class from another package
-        default: visible to all classes with the package 
-  [more about access modifier](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)
 
-- Cosmic superclass: In Java, every class extends the Object class. It is the default. But the primitive types are not object.
+                   It is important to remember that a sub-class from another package can only access the protected variable
+                   of the object instantiated from the sub-class itself, not of  super class object or other object derived
+                   from same super class. An example will make this clear
+
+                   Employee class is a super class that declares hireDate as protected field.
+                   Manager class is derived from Employee class in the same package
+                   Administrator is derived from the Employee class but in different package. 
+
+                   Now, the methods of the Administrator class can access teh hireDate field directly only of the Administrator
+                   objects. Not Employee object or Manager object.
+                   This mechanism ensures that someone can't get access to the protected fields just by forming subclasses.
+
+                   Protected methods make more sense. If a method is tricky to use, you can make it protected. This means
+                   only the class with good knowledge about their ancestors can use this method. 
+
+
+        **default**: visible to all classes with the package 
+[more about access modifier](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)
+
+- Cosmic superclass- In Java, every class extends the Object class. It is the default. But the primitive types(number,
+        character, boolean) are not object.
+        
+        Object class has a "equals" method. This method checks if two objects are identical meaning if their reference is
+        same. But this equality check may not work for all object type. For some object we want to find state based equality.
+        For this, we should override the "equals" method as per our need. 
+
+
+
+
 
 
     
@@ -478,8 +518,28 @@ to declare a class as abstract even if there is no abstract method. If a subclas
 
 
 
+<a name="interface"></a>
+## Interface
+- Java interfaces are requirements for classes. The classes those implements an interface conforms to the requirements
+- Interfaces can't be instantiated
+- Interface can be used as type and it a reference type
+- Interface can contain the following-
+    a. public static final variable (the variables are by default public static final)
+    b. private method
+    c. private static method(as of java SE8)
+    d. public static abstract method (methods are by default public and abstract) 
+    c. default method: These methods povide a function body. This is useful as these methods doesn't have to be defined 
+    in the implementing classes. 
+- The class that implements interface, must define all the methods
+- In java interface is a solution for multiple inheritance 
 
 
+
+
+
+
+<a name="errorHandling"></a>
+## Error Handling
 
 
 
@@ -497,6 +557,6 @@ to declare a class as abstract even if there is no abstract method. If a subclas
 
 
 ## Resources Used
-1. [Java: A beginner's guide] (http://proquestcombo.safaribooksonline.com.ezproxy.torontopubliclibrary.ca/book/programming/java/9781260440225/the-history-and-philosophy-of-java/ch1lev2sec4_html?uicode=torontopl)
+1.[Java: A beginner's guide] (http://proquestcombo.safaribooksonline.com.ezproxy.torontopubliclibrary.ca/book/programming/java/9781260440225/the-history-and-philosophy-of-java/ch1lev2sec4_html?uicode=torontopl)
 2. Core Java, by Cay S. Hortsmann
-3. 
+ 
