@@ -6,7 +6,11 @@ Learning JAVA
 - [Inheritance](#inheritance)
 - [Polymorphism](#polymorphism)
 - [Interface](#interface)
+- [Generics](#generics)
 - [Error Handling](#errorHandling)
+- [Collection](#collection)
+- [Multithreading](#threading)
+- [JavaFx](#javafx)
 
 
 
@@ -38,7 +42,7 @@ Learning JAVA
 
 
 <a name="fundamental"></a>
-## Chapter 1- Java Fundamentals
+## Java Fundamentals
 1. Byte code: This is not machine code. This is highly optimized set of instructions to be executed by JVM (java 
         virtual machine).
 2. Java is platform independent by the way of using JVM. JVM is platform dependent. 
@@ -58,7 +62,7 @@ client side.
 
 
 
-## Chapter 2- Data Types and Operators
+## Data Types and Operators
 1. Java is strongly typed. All operations are type checked at compile time. 
     Java has 8 primitive types- 4 ints, 2 floating point, 1 char, 1 boolean
     *ints*
@@ -471,15 +475,19 @@ if(staff[0] instanceof Manager)
 boss= (Manager) staff[0];
 ```
 
-- Abstract method and Abstract class- Abstract methods are implemented in the subclass. If a class has an  abstract method,the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible to declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract methods from super class, that subclass also must be abstract class. A subclass becomes a concrete class when it defiles all the abstract methods from super class. We can create a variable of abstract type but that must refer to a concrete sub-class.
+- Abstract method and Abstract class- Abstract methods are implemented in the subclass. If a class has an  abstract
+method,the class must be declared as abstract calss. We can't instantiate an object from abstract class. It is possible
+to declare a class as abstract even if there is no abstract method. If a subclass doesn't implement all the abstract
+methods from super class, that subclass also must be abstract class. A subclass becomes a concrete class when it defiles
+all the abstract methods from super class. We can create a variable of abstract type but that must refer to a concrete
+sub-class.
 
 - A subclass can be abstract even if its super class is concrete 
 - A concrete method can be overriden as abstract
 - Access modifier: Java has four access modifier- public, private, protected, default(package-private)
-
-        **public**: visible to world
-        **private**: visible to class only
-        **protected**: visible to all classes in the same package(package-private) 
+        public: visible to world
+        private: visible to class only
+        protected: visible to all classes in the same package(package-private) 
                    and by its sub-class from another package
 
                    It is important to remember that a sub-class from another package can only access the protected variable
@@ -498,7 +506,7 @@ boss= (Manager) staff[0];
                    only the class with good knowledge about their ancestors can use this method. 
 
 
-        **default**: visible to all classes with the package 
+        default: visible to all classes with the package 
 [more about access modifier](https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html)
 
 - Cosmic superclass- In Java, every class extends the Object class. It is the default. But the primitive types(number,
@@ -532,8 +540,128 @@ boss= (Manager) staff[0];
     in the implementing classes. 
 - The class that implements interface, must define all the methods
 - In java interface is a solution for multiple inheritance 
+- If there is name conflict between interface and superclass, superclass always wins.
+- if there is name conflict between two interfaces, copiler will throw an error and the programmer has to select one 
+methods explicitly. 
+
+**Some Interfaces**<br>
+- The interface "ActionListener" provides a callback function facility
+- Comparator interface: provides a method called "compare" we can define it for custom comparision
+- Clonable interface
 
 
+#### Lambda Expression/Closures
+- an anonymous function which defines the functional interface
+- functional interface is an interface which has only one abstract method. 
+- interface can have multiple private, static and default methods. But these are not abstract method.
+So, a functional interface can also have multiple of these methods.
+- lambda expression doesn't need any parameter type
+- the return type of a lambda expression is always inferred. It is never specified.
+- A lambda expression is always used in a context where the target type is specified. This is used to infer the return 
+type.
+- when a lambda expression, an instance of a class is automatically created. This class implements the functional inter
+face
+- Lambda expression can capture instance variable, instance methods of enclosing class and effectively final local vari
+able
+defined in the enclosing class/block.
+- lambda expression can change instance variable value but can't modify the local variable. 
+- We can't make lambda function generic. However, we can make the functional inteface generic and thus can use one lambda
+expression for multiple types
+
+
+#### Exception inside Lambda Expression
+[TO READ](https://proquestcombo-safaribooksonline-com.ezproxy.torontopubliclibrary.ca/book/programming/java/97812604402
+        25/the-history-and-philosophy-of-java/ch1lev2sec4_html#X2ludGVybmFsX0h0bWxWaWV3P3htbGlkPTk3ODEyNjA0NDAyMjUlMkZj
+        aDE0bGV2MXNlYzZfaHRtbCZxdWVyeT0=)
+
+#### Method Reference: Need to study further
+- A way to refer to a method instead of calling it instantly. It can be used in place of lambda expression.
+- Three type of method reference- static method, instance method, constructor reference
+- java.util.function has several predifined functional interface.
+
+
+#### Constructor Reference
+
+
+
+
+<a name="generics"></a>
+## Generics
+- It parameterized type which means the type information is passed as parameter.
+- The type can only be reference type not premitive type. For example, we need to use Integer as type instead of int.
+- Wrape the primitive type with a type wraper. TODO: java autoboxing and auto-unboxing is related to that.
+- Generic type differ based on their type argument. 
+
+#### Raw Type
+
+#### Type Erasure
+
+#### Generic Method
+The systax is 
+`access modifier Type parameter return type name(argument list){}`
+`public static <T extends Comparable<T>, V extends T> boolean compare(T[], V[]){}`
+
+#### Generic Constructor
+The syntax is 
+`<T extends Number> name(T var){};`
+
+
+#### Generic Interface
+The systax is `interface name<T>{}`
+
+#### Bounded Types
+- We can restrict the type that can be passed to generic class. For example, if we want our class to have only numbers,
+    i.e int, double, float etc, we can use the bounded types syntax.
+- In bounded types we specify the superclass of the type we want to allow. For example, for number types the super class
+is Number. 
+- The systax is
+
+
+```java
+class numericClass<T extends Number>{
+    //T must be an instance of Number or its
+    //subclass
+}
+
+class anotherClass <T, V extends T>{
+    // in this class V must be instance of the same 
+    //class as T or subclass
+}
+```
+The notation `T extends BoundingType` means that T is subtype of bounding type. In other words T implements BoundingType.
+Here both T and the bounding type can be class or interface. **Note that evenif the bounding type is interface we are 
+writing `extends` not implements**. 
+
+tag-question: T and bounding types can be both class or interface. Are all the following scenarios valid-
+        a) interface extends interface
+        b) class extends interface
+        c) class implements interface
+- there can be multiple bounds. There can be multiple interface as bounds but only one class and the class must be the
+first bound.
+
+`T extends Comparable & Serializable`
+
+
+#### WildCard
+It is best to describe with an example. Lets say we have a class like following-
+`class numericItem<T extends Number>{
+
+    boolean absEqual(numericItem<T> obj){};
+}` 
+
+the method compares two instance of numericItem. However, the method will not compile if we use objects of different
+types i.e. numericItem<Double> and numericItem<Float>. To make this work we need to use the wildcard as follows
+
+`class numericItem<T extends Number>{
+    boolean absEqual(numericItem<?> obj){}
+}`
+
+
+#### Bounded Wildcard
+When we want to specify the upper type bound for a wildcard.
+
+
+**Type argument can't be used in static context**
 
 
 
@@ -541,12 +669,109 @@ boss= (Manager) staff[0];
 <a name="errorHandling"></a>
 ## Error Handling
 
+- all exceptions are derived from "Throwable" class
+- once an exception is handled, it is removed from the system. Therefore, the program can continue its execution. 
+- in multiple catch block, put the super class exception at the very last. Put more specific exceptions first.
+- nested try block is possible. You may put code that can generate less serious error in the inner try block, and put
+more serious error in the outer try. If an exception is not caught in the inner try block, it is propagated to the outer
+try block.
+- we can manually throw an exception and re-throw an already thrown exception. One reason for re-throwing an exception,
+    is that different handler may work on different aspect of the exception. 
+- "Throws" specifies that a method may throw an exception and doesn't handle it itself. So, the calling method must
+handle the exception. We don't need to specify "throws" keyword for subclass of Error or RuntimeException.
+- Multi catch statement can handle more than one type of exception in a single catch block. the systax is `catch (Exception
+        type | ExceptionType e){...}`
+- rethrow keyword restricts the type exception that can be rethrown. 
+- chained exception- helps to identify one exception which is the cause of another exception. 
 
 
 
 
 
+<a name="collection"></a>
+## Collection
 
+![](java-collection.png)
+
+
+#### Array List
+- Efficient random access
+- Dynamic size
+- Java also has a Vector class. There is one important difference between ArrayList and Vector. All methods of the Vector
+class is **Syschronized**. If we are using Vector in a single threaded application, its better to use the ArrayList as 
+the methods are not synchronized and hence are more efficient.
+
+tag:question- What is the overhead of synchronization? How to find that?
+
+#### Linked List
+- In java all linked lists are doubly linked list.
+- Linked list is an ordered list, all items are added at the end of the list
+- If we want to add an element at middle of the list we have to use the ListIterator. 
+- If the iterator position is the biginning of the list the item is added at begining of the list making it the new 
+head. If the iterator position is the end of the list the item is added at the end of the list making it the new tail. 
+- Linked list is not efficient for random access. Never use linked list for random access.
+- Linked list provides a method `get()` to get element at a random position. But using it is inefficient.
+
+
+#### HashSet
+- Hash set is implemented by hash table
+- Doesn't allow duplicate
+
+
+#### TreeSet
+- Same as HashSet but sorted
+- the sorting is done using the Tree data structure specifically red-black tree
+- adding an element is slower than HashSet but still much faster than array or linkedlist.
+
+
+
+<a name="threading"></a>
+## Multithreading
+- Thread class provides functionality for multithreading programming.
+- We create an object of type Thread to create a new thread.
+- To create a Thread object, we need a runnable object
+- we can create a runnable object either by implementing the Runnable interface or by extending the Thread class
+- factory methods are useful in variety of situatiions. These methods return an instance of a class.
+- we can use join() or isAlive() to join the threads. Thread can be terminated before join() is executed. 
+- we can prioratize threads. Giving a thread a higher priority means the thread has higher potential to get cpu time.
+Apart from priority, there are many factors those determies which gets cpu time. For example, if a higher priority thread
+is waiting for some data, it will be blocked and lower priority threads will get cpu time. It also depends on the os, how
+the os implements multitasking. So, giving a thread a higher priority doesn't guarantee that it will get more cpu time,
+    but there is higher potential for the thread to get cpu time. 
+- Synchronizing threads is needed if multiple threads access a shared resource or one thread depends on the result
+produced by another thread. 
+- In java, we do synchronizing, by using "synchronized" keyword. We use this keyword with the methods. The rule is- when
+a thread enters a synchronized method, the object is locked and other threads can't access any synchronized methods of
+the object. Once the method returns, the object is unlocked and other threads can access the object.
+- we can also use **synchronized block** to make synchronized call to a method. We do this when we are using an object
+which is not designed by us and the method is not declared as synchronized.
+- thread pool
+
+
+<a name="javafx"></a>
+## JavaFx
+
+
+
+#### Event handler
+
+
+
+#### Nested Class
+- A class within a class
+- two types of nested class- a) Static b) non-static(Inner)
+- Inner class can be of two types- a)Local class b) Anonymous class
+
+-----------------------------------------------------
+|Associated with the outer class| Associated with the instance of outer class|
+-----------------------------------------------------------------
+|Syntax: 
+ 
+[read from here](https://docs.oracle.com/javase/tutorial/java/javaOO/nested.html)
+
+
+
+## Testing
 
 
 
@@ -559,4 +784,4 @@ boss= (Manager) staff[0];
 ## Resources Used
 1.[Java: A beginner's guide] (http://proquestcombo.safaribooksonline.com.ezproxy.torontopubliclibrary.ca/book/programming/java/9781260440225/the-history-and-philosophy-of-java/ch1lev2sec4_html?uicode=torontopl)
 2. Core Java, by Cay S. Hortsmann
- 
+3. https://learning.oreilly.com/videos/computer-science/9780134465951/9780134465951-CSCI_00_A  
