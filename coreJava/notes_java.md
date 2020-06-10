@@ -657,7 +657,6 @@ default. But the primitive types(number,
 
 
 
-<a name="interface"></a>
 ## Interface
 - Java interfaces are requirements for classes. The classes those implements an
 interface conforms to the requirements
